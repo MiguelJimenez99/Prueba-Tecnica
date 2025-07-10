@@ -17,7 +17,7 @@ exports.getAllVotes = async (req, res) => {
     }
 
     res.status(200).json({
-      message: "Votos encontrados",
+      message: "Votos registrados",
       votes,
     });
   } catch (error) {

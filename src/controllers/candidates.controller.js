@@ -38,7 +38,7 @@ exports.getCandidate = async (req, res) => {
     }
 
     res.status(200).json({
-      message: "Candidato obtenido correctamente",
+      message: "Detalles del candidato obtenido correctamente",
       candidate: candidate,
     });
   } catch (error) {

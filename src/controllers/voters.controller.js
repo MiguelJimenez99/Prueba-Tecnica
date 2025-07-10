@@ -12,7 +12,10 @@ exports.getAllVoters = async (req, res) => {
         voters: [],
       });
     }
-    res.status(200).json(voters);
+    res.status(200).json({
+      message: "Votantes obtenidos correctamente",
+      voters
+    });
   } catch (error) {
     res.status(500).json({
       message: "error en el servidor",
@@ -34,7 +37,10 @@ exports.getVoter = async (req, res) => {
       });
     }
 
-    res.status(200).json(voter);
+    res.status(200).json({
+      message: "detalles del votante obtenidos correctamente",
+      voter
+    });
   } catch (error) {
     res.status(500).json({
       message: "Error en el servidor",

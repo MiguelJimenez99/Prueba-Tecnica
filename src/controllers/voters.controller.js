@@ -86,7 +86,7 @@ exports.postVoter = async (req, res) => {
 
     if (isCandidate) {
       return res.status(400).json({
-        message: "El votante ya esta registrado como candidato",
+        message: "El usuario ya esta registrado como candidato",
       });
     }
 

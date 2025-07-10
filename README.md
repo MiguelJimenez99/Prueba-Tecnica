@@ -397,9 +397,6 @@ si no hay votos registrados
 
 A continuación se muestran capturas del endpoint `/votes/statistics` en insomnia:
 
-> Guarda tus capturas en una carpeta llamada `capturas/`  
-> y reemplaza los enlaces de imagen por los reales.
-
 ![Captura de estadísticas](./src/assets/capturas/Estadisticas_votaciones.png)
 
 ---

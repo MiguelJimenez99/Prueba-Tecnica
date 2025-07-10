@@ -24,8 +24,12 @@ npm install
 Crea un archivo `.env` en la raíz del proyecto con el siguiente contenido:
 
 ```env
+# MongoDB local
 PUERTO=3000
 URL_DATABASE=mongodb://localhost:27017/votaciones
+
+# MongoDB Atlas (opcional)
+# URL_DATABASE=mongodb+srv://usuario:clave@cluster.mongodb.net/votaciones
 ```
 
 ### 4. Iniciar el servidor

@@ -18,8 +18,10 @@ app.use("/api", voterRouter);
 app.use("/api", candidateRouter);
 app.use("/api", voteRouter);
 
+const MONGO_URL = process.env.URL_DATABASE || "mongodb://localhost:27017/votaciones";
+
 mongoose
-  .connect(process.env.URL_DATABASE)
+  .connect(MONGO_URL)
   .then(() => console.log("MongoDB conectado correctamente"))
   .catch((err) => console.log("Error al establecer la coneccion", err));
 

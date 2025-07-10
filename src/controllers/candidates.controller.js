@@ -60,6 +60,17 @@ exports.postCandidate = async (req, res) => {
       });
     }
 
+    // se valida que el candidato ya esta registrado
+    const candidateExist = await Candidate.findOne({
+      name: { $regex: new RegExp(`^${name}$`, "i") },
+    });
+
+    if (candidateExist) {
+      return res.status(400).json({
+        message: "El candidato ya esta registrado",
+      });
+    }
+
     // se valida que el candidato no esta registrado como votante mediante el nombre
     const isVoter = await Voter.findOne({
       name: { $regex: new RegExp(`^${name}$`, "i") },
@@ -70,7 +81,6 @@ exports.postCandidate = async (req, res) => {
         message: "El candidato ya esta registrado como votante",
       });
     }
-
 
     // se crea el nuevo candidato si no esta registrado como votante
     const newCandidate = new Candidate({

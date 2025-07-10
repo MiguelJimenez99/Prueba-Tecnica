@@ -1,3 +1,5 @@
+const validator = require("validator");
+
 const Voter = require("../models/voter.model");
 const Candidate = require("../models/candidate.model");
 
@@ -14,7 +16,7 @@ exports.getAllVoters = async (req, res) => {
     }
     res.status(200).json({
       message: "Votantes obtenidos correctamente",
-      voters
+      voters,
     });
   } catch (error) {
     res.status(500).json({
@@ -39,7 +41,7 @@ exports.getVoter = async (req, res) => {
 
     res.status(200).json({
       message: "detalles del votante obtenidos correctamente",
-      voter
+      voter,
     });
   } catch (error) {
     res.status(500).json({
@@ -60,7 +62,24 @@ exports.postVoter = async (req, res) => {
       });
     }
 
-    // verificar que el votante esta registrado como candidato, validacion por medio de nombre
+    //validamos que el correo sea valido
+    const emailValidator = validator.isEmail(email);
+
+    if (!emailValidator) {
+      return res.status(400).json({
+        message: "Ingrese un correo valido",
+      });
+    }
+
+    //verifico que el votante ya esta registrado
+    const isVotersExists = await Voter.findOne({ email });
+    if (isVotersExists) {
+      return res.status(400).json({
+        message: "El votante ya esta registrado",
+      });
+    }
+
+    // verificar si el votante esta registrado como candidato, validacion por medio de nombre
     const isCandidate = await Candidate.findOne({
       name: { $regex: new RegExp(`^${name}$`, "i") },
     });

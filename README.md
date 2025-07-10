@@ -39,6 +39,30 @@ El servidor estará disponible en:
 
 ---
 
+### Ejemplo de uso con insomnia
+
+1. Abre Insomnia y crea una nueva **solicitud** según el método (POST, GET, DELETE, etc.).
+
+**Ejemplo crear votante: solicitud POST**
+
+2. URL: `http://localhost:3000/api/voters`
+3. En **Body**, selecciona `JSON` y coloca:
+
+```json
+{
+  "name": "Carlos Pérez",
+  "email": "carlos@email.com"
+}
+```
+
+Haz clic en Send y deberías recibir una respuesta como:
+
+```json
+{
+  "message": "Nuevo votante registrado correctamente"
+}
+```
+
 ## Endpoints disponibles
 
 ### Registrar votante

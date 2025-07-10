@@ -10,7 +10,7 @@ ademas tambien nos permite listar a los votantes, los candidatos y los diferente
 
 ```bash
 git clone https://github.com/MiguelJimenez99/Prueba-Tecnica.git
-cd Prueba-tecnica
+cd Prueba-Tecnica
 ```
 
 ### 2. Instalar dependencias

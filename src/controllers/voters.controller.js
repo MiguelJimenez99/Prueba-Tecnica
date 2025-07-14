@@ -54,25 +54,16 @@ exports.getVoter = async (req, res) => {
 // controlador para crear un nuevo votante
 exports.postVoter = async (req, res) => {
   try {
-    const { name, email } = req.body;
+    const { name, document, email } = req.body;
 
-    if (!name || !email) {
+    if (!name || !document || !email) {
       return res.status(400).json({
         message: "Todos los datos son requeridos",
       });
     }
 
-    //validamos que el correo sea valido
-    const emailValidator = validator.isEmail(email);
-
-    if (!emailValidator) {
-      return res.status(400).json({
-        message: "Ingrese un correo valido",
-      });
-    }
-
     //verifico que el votante ya esta registrado
-    const isVotersExists = await Voter.findOne({ email });
+    const isVotersExists = await Voter.findOne({ document });
     if (isVotersExists) {
       return res.status(400).json({
         message: "El votante ya esta registrado",
@@ -80,9 +71,7 @@ exports.postVoter = async (req, res) => {
     }
 
     // verificar si el votante esta registrado como candidato, validacion por medio de nombre
-    const isCandidate = await Candidate.findOne({
-      name: { $regex: new RegExp(`^${name}$`, "i") },
-    });
+    const isCandidate = await Candidate.findOne({ document });
 
     if (isCandidate) {
       return res.status(400).json({
@@ -91,7 +80,7 @@ exports.postVoter = async (req, res) => {
     }
 
     // se crea el nuevo votante si no esta registrado con candidato
-    const newVoter = new Voter({ name, email });
+    const newVoter = new Voter({ name, document, email });
     await newVoter.save();
 
     res.status(201).json({

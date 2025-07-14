@@ -52,18 +52,16 @@ exports.getCandidate = async (req, res) => {
 // controlador para crear un nuevo candidato
 exports.postCandidate = async (req, res) => {
   try {
-    const { name, party } = req.body;
+    const { name, document, party } = req.body;
 
-    if (!name) {
+    if (!name || !document) {
       return res.status(403).json({
-        message: "El nombre es requeridos",
+        message: "Todos los campos son requeridos",
       });
     }
 
     // se valida que el candidato ya esta registrado
-    const candidateExist = await Candidate.findOne({
-      name: { $regex: new RegExp(`^${name}$`, "i") },
-    });
+    const candidateExist = await Candidate.findOne({ document });
 
     if (candidateExist) {
       return res.status(400).json({
@@ -72,9 +70,7 @@ exports.postCandidate = async (req, res) => {
     }
 
     // se valida que el candidato no esta registrado como votante mediante el nombre
-    const isVoter = await Voter.findOne({
-      name: { $regex: new RegExp(`^${name}$`, "i") },
-    });
+    const isVoter = await Voter.findOne({ document });
 
     if (isVoter) {
       return res.status(400).json({
@@ -85,6 +81,7 @@ exports.postCandidate = async (req, res) => {
     // se crea el nuevo candidato si no esta registrado como votante
     const newCandidate = new Candidate({
       name,
+      document,
       party,
     });
 

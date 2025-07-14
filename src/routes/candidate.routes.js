@@ -8,9 +8,12 @@ const {
   deleteCandidate,
 } = require("../controllers/candidates.controller");
 
+const { validatorCandidates } = require("../validators/validators");
+const validate = require("../middleware/validators.middleware");
+
 router.get("/candidates", getAllCandidates);
 router.get("/candidates/:id", getCandidate);
-router.post("/candidates", postCandidate);
+router.post("/candidates", validatorCandidates, validate, postCandidate);
 router.delete("/candidates/:id", deleteCandidate);
 
 module.exports = router;

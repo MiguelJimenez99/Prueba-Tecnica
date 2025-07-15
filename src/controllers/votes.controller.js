@@ -62,7 +62,7 @@ exports.getVotesStatistics = async (req, res) => {
         votesByCandidate,
         percentageCandidate,
         totalVotersVoted,
-      }
+      },
     });
   } catch (error) {
     res.status(500).json({

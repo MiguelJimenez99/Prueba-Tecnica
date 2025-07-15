@@ -1,4 +1,4 @@
-const validator = require("validator");
+const jwt = require("jsonwebtoken");
 
 const Voter = require("../models/voter.model");
 const Candidate = require("../models/candidate.model");
@@ -63,8 +63,8 @@ exports.postVoter = async (req, res) => {
     }
 
     //verifico que el votante ya esta registrado
-    const isVotersExists = await Voter.findOne({ document });
-    if (isVotersExists) {
+    const existingVoter = await Voter.findOne({ document });
+    if (existingVoter) {
       return res.status(400).json({
         message: "El votante ya esta registrado",
       });
@@ -83,7 +83,14 @@ exports.postVoter = async (req, res) => {
     const newVoter = new Voter({ name, document, email });
     await newVoter.save();
 
+    //generar token
+
+    const token = jwt.sign({ voter: newVoter._id }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
     res.status(201).json({
+      token: token,
       message: "Nuevo votante registrado correctamente",
       voter: newVoter,
     });
